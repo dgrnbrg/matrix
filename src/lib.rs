@@ -170,3 +170,4 @@ pub mod decomposition;
 pub mod format;
 pub mod operation;
 pub mod prelude;
+pub mod index;

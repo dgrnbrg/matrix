@@ -8,6 +8,7 @@
 
 use {Element, Matrix, Size};
 use position::Position;
+use index::*;
 
 /// A packed matrix.
 #[derive(Clone, Debug, PartialEq)]
@@ -87,9 +88,12 @@ impl<T: Element> Packed<T> {
         debug_assert!(rows == _columns);
         new!(rows, variant, vec![T::zero(); triangular_elems(rows)])
     }
+}
 
+impl<T: Element> Indexed<T> for Packed<T> {
     /// Read an element from the matrix
-    pub fn get<P: Position>(&self, position: P) -> Option<&T> {
+    fn get(&self, position: (usize,usize)) -> Option<&T> {
+        //TODO add another enum that expresses whether this is symmetric or triangular
         let (mut i, mut j) = position.coordinates();
         let index = match &self.variant {
             &Variant::Upper => {
