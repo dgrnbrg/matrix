@@ -11,7 +11,7 @@ use position::Position;
 use index::*;
 
 /// A packed matrix.
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct Packed<T: Element> {
     /// The number of rows or columns.
     pub size: usize,
@@ -32,7 +32,7 @@ mod convert;
 mod operation;
 
 /// A variant of a packed matrix.
-#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Serialize, Deserialize)]
 pub enum Variant {
     /// The lower-triangular variant.
     Lower,
@@ -135,6 +135,16 @@ impl Variant {
         match *self {
             Variant::Lower => Variant::Upper,
             Variant::Upper => Variant::Lower,
+        }
+    }
+}
+
+impl<T> Packed<T> where T: Element {
+    /// Returns the character for the lapack API whether this is lower 'L' or upper 'U'.
+    pub fn uplo(&self) -> u8 {
+        match self.variant {
+            Variant::Lower => 'L' as u8,
+            Variant::Upper => 'U' as u8,
         }
     }
 }

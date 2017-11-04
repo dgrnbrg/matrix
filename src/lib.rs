@@ -52,6 +52,9 @@ extern crate blas;
 #[cfg(feature = "acceleration")]
 extern crate lapack;
 
+#[macro_use]
+extern crate serde_derive;
+
 extern crate num_complex;
 extern crate num_traits;
 
