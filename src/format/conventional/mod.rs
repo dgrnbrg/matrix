@@ -4,6 +4,7 @@
 
 use std::ops::{Deref, DerefMut, Index, IndexMut};
 use std::ptr;
+use index::*;
 
 use {Element, Matrix, Position, Size};
 
@@ -134,6 +135,14 @@ impl<T: Element> DerefMut for Conventional<T> {
     #[inline]
     fn deref_mut(&mut self) -> &mut Self::Target {
         self.values.deref_mut()
+    }
+}
+
+impl<T: Element> Indexed<T> for Conventional<T> {
+    /// Read an element from the matrix
+    fn get(&self, position: (usize,usize)) -> Option<&T> {
+        let (row, col) = position.coordinates();
+        self.values.get(row + col * self.rows)
     }
 }
 
