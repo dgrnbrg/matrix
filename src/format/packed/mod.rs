@@ -94,7 +94,7 @@ impl<T: Element> Indexed<T> for Packed<T> {
     /// Read an element from the matrix
     fn get(&self, position: (usize,usize)) -> Option<&T> {
         //TODO add another enum that expresses whether this is symmetric or triangular
-        let (mut i, mut j) = position.coordinates();
+        let (i, j) = position.coordinates();
         let index = match &self.variant {
             &Variant::Upper => {
                 if i > j {
