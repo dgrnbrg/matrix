@@ -25,3 +25,5 @@ pub use operation::Transpose;
 
 pub use decomposition::SingularValue;
 pub use decomposition::SymmetricEigen;
+
+pub use index::Indexed;
